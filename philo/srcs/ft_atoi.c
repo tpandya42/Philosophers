@@ -15,30 +15,30 @@ static const char	*skip_spaces_and_sign(const char *str, int *sign)
 	return (str);
 }
 
-static int	parse_number(const char *str, int sign, int *out)
+static int	parse_number(const char *str, int sign, long *out)
 {
-	long	result;
+	long	result = 0;
 
-	result = 0;
 	while (*str)
 	{
 		if (*str < '0' || *str > '9')
 			return (0);
-		result = result * 10 + (*str - '0');
-		if ((sign == 1 && result > INT_MAX) 
-			|| (sign == -1 && (-result) < INT_MIN))
+		if (sign == 1 && (result > (LONG_MAX - (*str - '0')) / 10))
 			return (0);
+		if (sign == -1 && (-result < (LONG_MIN + (*str - '0')) / 10))
+			return (0);
+
+		result = result * 10 + (*str - '0');
 		str++;
 	}
-	*out = (int)(result * sign);
+	*out = result * sign;
 	return (1);
 }
 
-int	ft_atoi(const char *str, int *res)
+int	ft_atol(const char *str, long *res)
 {
-	int	sign;
+	int	sign = 1;
 
-	sign = 1;
 	if (!str || !res)
 		return (0);
 	str = skip_spaces_and_sign(str, &sign);
@@ -48,3 +48,4 @@ int	ft_atoi(const char *str, int *res)
 		return (0);
 	return (1);
 }
+

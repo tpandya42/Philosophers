@@ -1,6 +1,6 @@
 #include "philo.c"
 
-static void	init_inp(t_data *data, int *inp[5])
+static void	init_inp(t_data *data, long *inp[5])
 {
 	inp[0] = &data->num_ph;
 	inp[1] = &data->ttd;
@@ -9,11 +9,11 @@ static void	init_inp(t_data *data, int *inp[5])
 	inp[4] = &data->must_eat;
 }
 
-static int get_data_0(int *inp, char *av)
+static int get_data_0(long *inp, char *av)
 {
     int success;
 
-    success = ft_atoi(av, inp);
+    success = ft_atol(av, inp);
     if (!success || *inp < 1)
     {
         write(2, "Parsing Failed\n", 15);
@@ -25,7 +25,7 @@ static int get_data_0(int *inp, char *av)
 
 static int	get_data_1(t_data *data, char **av, int ac)
 {
-	int	*inp[5];
+	long	*inp[5];
 	int	i;
 
 	init_inp(data, inp);

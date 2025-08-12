@@ -2,8 +2,12 @@
 
 int	main(int ac, char **av)
 {
-	t_data	data;
+	t_data	*data;
+	t_ph	*philo;
+	t_chopstick	*stick;
 
-	if (!content(&data, av + 1, ac - 1))
+	if (init_init(data, av, ac) == FAILURE){
+		clean_all_0(data);
 		return (EXIT_FAILURE);
+	}
 }

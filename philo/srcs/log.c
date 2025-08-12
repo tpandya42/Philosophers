@@ -15,9 +15,9 @@ static void	text(char *log, t_tasks task)
 		ft_strcpy(log, "is thinking");
 }
 
-void	log(t_task task, t_ph *ph)
+void	log_text(t_tasks task, t_ph *ph)
 {
 	char	*log;
 
-	text(log, last);
+	text(log, task);
 }
