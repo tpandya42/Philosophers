@@ -68,8 +68,7 @@ int	content(t_data *data, char **av, int ac);
 int	init_init(t_data *data, char **av, int ac);
 int	run(t_data *data);
 void	*routine(void *arg);
-
 void	clean_all_0(t_data *data);
-
+long	get_time_in_ms(void);
 
 #endif
