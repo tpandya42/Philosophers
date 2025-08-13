@@ -1,6 +1,5 @@
 #include "philo.h"
 
-
 static t_status join_threads(pthread_t *threads, t_data *data)
 {
     int i;
@@ -43,6 +42,7 @@ static int	create_threads(pthread_t *threads, t_data *data)
 
 int	run(t_data *data)
 {
+	printf("Entered run\n");
 	pthread_t	*threads;
 
 	threads = malloc(sizeof(pthread_t) * data->num_ph);
@@ -53,4 +53,6 @@ int	run(t_data *data)
 	if (join_threads(threads, data) == FAILURE)
 		return (free(threads), FAILURE);
 	free(threads);
+	printf("It worked\n");
+	return (SUCCESS);
 }

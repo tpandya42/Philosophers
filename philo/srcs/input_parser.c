@@ -1,4 +1,4 @@
-#include "philo.c"
+#include "philo.h"
 
 static void	init_inp(t_data *data, long *inp[5])
 {
@@ -17,9 +17,10 @@ static int get_data_0(long *inp, char *av)
     if (!success || *inp < 1)
     {
         write(2, "Parsing Failed\n", 15);
-        return 0;
+        return FAILURE;
     }
-    return 1;
+    printf("inp: %ld", *inp);
+    return SUCCESS;
 }
 
 
@@ -32,11 +33,12 @@ static int	get_data_1(t_data *data, char **av, int ac)
 	i = 0;
 	while (i < ac)
 	{
-		if (!get_data_0(inp[i], av[i]))
-			return (0);
+		if (get_data_0(inp[i], av[i]) == FAILURE)
+			return FAILURE;
 		i++;
 	}
-	return (1);
+	printf("Got all the inputs\n");
+	return (SUCCESS);
 }
 
 int	content(t_data *data, char **av, int ac)
@@ -44,10 +46,11 @@ int	content(t_data *data, char **av, int ac)
 	if (ac !=4 && ac != 5)
 	{
 		write (2, "Invalid number of arguments\n", 28);
-		return (0);
+		return FAILURE;
 	}
 	data->must_eat  = -1;
-	if (!get_data_1(data, av, ac))
-		return (0);
-	return (1);
+	if (get_data_1(data, av, ac) == FAILURE)
+		return FAILURE;
+	printf("Got the content\n");
+	return SUCCESS;
 }

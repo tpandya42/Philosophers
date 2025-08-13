@@ -8,8 +8,10 @@ static int	init_struct_data(t_data *data)
 	data->tts = 0;
 	data->must_eat = 0;
 	data->start_time = 0;
-
-	return (1);
+	data->end = false;
+	data->stick = NULL;
+	data->philo = NULL;
+	return (SUCCESS);
 }
 
 static int	init_chopsticks(t_data *data)
@@ -54,13 +56,15 @@ static int	init_struct_philo(t_data *data)
 
 int	init_init(t_data *data, char **av, int ac)
 {
-	if (!init_struct_data(data))
+	printf("Enterred init_inint\n");
+	if (init_struct_data(data) == FAILURE)
 		return (FAILURE);
-	if (!content(data, av + 1, ac - 1))
+	if (content(data, av + 1, ac - 1) == FAILURE)
 		return (FAILURE);
 	if (data->num_ph <= 0 || data->ttd <= 0 || data->tte <= 0 || data->tts <= 0 || (ac == 5 && data->must_eat <= 0))
 		return (FAILURE);
-	if (!init_chopsticks(data))
+	if (init_chopsticks(data) == FAILURE)
 		return (FAILURE);
+	printf("InIn success\n");
 	return (init_struct_philo(data));
 }

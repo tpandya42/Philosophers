@@ -1,18 +1,19 @@
 NAME = philo
 CC = cc
-CFLAGS = -wall -werror -wextra -pthread
+CFLAGS = -Wall -Werror -Wextra -pthread -g
 
-SRC_DIR = src 
+SRC_DIR = srcs
 SRC = $(wildcard $(SRC_DIR)/*.c)
 OBJ_DIR = obj
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-INC_DIR = include
+INC_DIR = includes
 INC = -I$(INC_DIR)
 
 all: $(NAME)
-	@$(MAKE) -C $(OBJ_DIR)
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
+$(NAME): $(OBJ)
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	@echo "Build complete!"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
@@ -20,9 +21,11 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 clean:
 	@rm -rf $(OBJ_DIR)
-	@rm -f $(NAME)
+
 fclean: clean
 	@rm -f $(NAME)
+
 re: fclean all
+
 .PHONY: all clean fclean re
 
