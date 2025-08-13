@@ -59,12 +59,15 @@ int	init_init(t_data *data, char **av, int ac)
 	printf("Enterred init_inint\n");
 	if (init_struct_data(data) == FAILURE)
 		return (FAILURE);
-	if (content(data, av + 1, ac - 1) == FAILURE)
+	printf("data strucutre created\n");
+	if (content(data, av, ac) == FAILURE)
 		return (FAILURE);
-	if (data->num_ph <= 0 || data->ttd <= 0 || data->tte <= 0 || data->tts <= 0 || (ac == 5 && data->must_eat <= 0))
+	printf("Content success\n");
+	if (data->num_ph <= 0 || data->ttd <= 0 || data->tte <= 0 || data->tts <= 0 || (ac == 6 && data->must_eat <= 0))
 		return (FAILURE);
 	if (init_chopsticks(data) == FAILURE)
 		return (FAILURE);
+	printf("got the sticks");
 	printf("InIn success\n");
 	return (init_struct_philo(data));
 }

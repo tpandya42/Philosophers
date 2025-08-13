@@ -62,7 +62,8 @@ typedef enum e_status
 	FAILURE
 }					t_status;
 
-int	ft_atol(const char *str, long *res);
+long	ft_atol(const char *str);
+int	ft_strlen(char *str);
 char				*ft_strcpy(char *dest, const char *src);
 int	content(t_data *data, char **av, int ac);
 int	init_init(t_data *data, char **av, int ac);
@@ -70,5 +71,5 @@ int	run(t_data *data);
 void	*routine(void *arg);
 void	clean_all_0(t_data *data);
 long	get_time_in_ms(void);
-
+void	error_exit(const char *error);
 #endif

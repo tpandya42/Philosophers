@@ -1,51 +1,48 @@
 #include "philo.h"
 
-static const char	*skip_spaces_and_sign(const char *str, int *sign)
+static int	is_space(char c)
 {
-	while (*str == ' ' || (*str >= 9 && *str <= 13))
-		str++;
-	if (*str == '+' || *str == '-')
-	{
-		if (*str == '-')
-			*sign = -1;
-		str++;
-	}
-	if (*str < '0' || *str > '9')
-		return (NULL);
-	return (str);
+	return ((c >= 9 && c <= 13) || c == 32);
 }
 
-static int	parse_number(const char *str, int sign, long *out)
+static int	is_digit(char c)
 {
-	long	result = 0;
-
-	while (*str)
-	{
-		if (*str < '0' || *str > '9')
-			return (0);
-		if (sign == 1 && (result > (LONG_MAX - (*str - '0')) / 10))
-			return (0);
-		if (sign == -1 && (-result < (LONG_MIN + (*str - '0')) / 10))
-			return (0);
-
-		result = result * 10 + (*str - '0');
-		str++;
-	}
-	*out = result * sign;
-	return (1);
+	return (c >= '0' && c <= '9');
 }
 
-int	ft_atol(const char *str, long *res)
+static const char *check_number(const char *str)
 {
-	int	sign = 1;
+	int	len;
+	const char	*num;
 
-	if (!str || !res)
-		return (0);
-	str = skip_spaces_and_sign(str, &sign);
-	if (!str)
-		return (0);
-	if (!parse_number(str, sign, res))
-		return (0);
-	return (1);
+	len = 0;
+	while (is_space(*str))
+		++str;
+	if (*str == '+')
+		++str;
+	else if(*str == '-')
+		error_exit("NO negative\n");
+	if(!is_digit(*str))
+		error_exit("No digit");
+	num = str;
+	while (is_digit(*str++))
+		++len;
+	if (len > 10)
+		error_exit("Too BIg");
+	return num;
 }
 
+long	ft_atol(const char *str)
+{
+	printf("Entering atol\n");
+	long	num;
+
+	num = 0;
+	str = check_number(str);
+	while (is_digit(*str))
+		num = (num * 10) + (*str++ - 48);
+	if (num > INT_MAX)
+		return FAILURE;
+	printf("exiting atol\n");
+	return (num);
+}

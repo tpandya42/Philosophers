@@ -36,6 +36,15 @@ void	clean_all_0(t_data *data)
 	}
 }
 
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		i++;
+	return (i);
+}
 
 long get_time_in_ms(void)
 {
