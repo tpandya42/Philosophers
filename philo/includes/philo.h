@@ -42,6 +42,7 @@ struct s_data
 	long				must_eat;
 	long			start_time;
 	bool			end;
+	pthread_mutex_t		print;
 	t_chopstick		*stick;
 	t_ph			*philo;
 };

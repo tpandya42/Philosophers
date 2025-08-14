@@ -11,6 +11,7 @@ static int	init_struct_data(t_data *data)
 	data->end = false;
 	data->stick = NULL;
 	data->philo = NULL;
+	pthread_mutex_init(&data->print, NULL);
 	return (SUCCESS);
 }
 

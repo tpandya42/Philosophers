@@ -31,7 +31,7 @@ void *routine(void *arg)
 {
     t_ph *philo = (t_ph *)arg;
 
-    usleep(500); // small stagger
+    usleep(500);
 
     while (!philo->data->end && !philo->if_eat_max)
     { 
