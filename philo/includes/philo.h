@@ -29,7 +29,7 @@ typedef struct s_ph
 	t_chopstick		*left_stick;
 	t_chopstick		*right_stick;
 	t_data			*data;
-
+	pthread_mutex_t		lock;
 }					t_ph;
 
 // DATA - > input data + other useful data
@@ -68,6 +68,7 @@ char				*ft_strcpy(char *dest, const char *src);
 int	content(t_data *data, char **av, int ac);
 int	init_init(t_data *data, char **av, int ac);
 int	run(t_data *data);
+void log_text(t_ph *philo, t_tasks task);
 void	*routine(void *arg);
 void	clean_all_0(t_data *data);
 long	get_time_in_ms(void);

@@ -49,6 +49,7 @@ static int	init_struct_philo(t_data *data)
 		data->philo[i].left_stick = &data->stick[i];
 		data->philo[i].right_stick = &data->stick[(i + 1) % data->num_ph];
 		data->philo[i].data = data;
+		pthread_mutex_init(&data->philo[i].lock, NULL);
 		i++;
 	}
 	return (SUCCESS);
