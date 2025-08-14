@@ -11,6 +11,8 @@ static int	init_struct_data(t_data *data)
 	data->end = false;
 	data->stick = NULL;
 	data->philo = NULL;
+	pthread_mutex_init(&data->write, NULL);
+	pthread_mutex_init(&data->death, NULL);
 	pthread_mutex_init(&data->print, NULL);
 	return (SUCCESS);
 }
@@ -51,6 +53,7 @@ static int	init_struct_philo(t_data *data)
 		data->philo[i].right_stick = &data->stick[(i + 1) % data->num_ph];
 		data->philo[i].data = data;
 		pthread_mutex_init(&data->philo[i].lock, NULL);
+		data->philo[i].last_eaten = get_time_in_ms();
 		i++;
 	}
 	return (SUCCESS);

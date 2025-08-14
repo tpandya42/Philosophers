@@ -20,6 +20,7 @@ void	eating(t_ph *philo)
 {
 	pick_up(philo);
 	pthread_mutex_lock(&philo->lock);
+	philo->last_eaten = get_time_in_ms();
 	log_text(philo, EAT);
 	usleep(philo->data->tte);
 	philo->num_eat++;
@@ -37,9 +38,15 @@ void *routine(void *arg)
     { 
 	eating(philo);
         if (philo->num_eat == philo->data->must_eat)
+	{
             philo->if_eat_max = true;
+	    break;
+	}
+	if (philo->data->end)
+		break;
 	
 	log_text(philo, THINK);
+	usleep(100);
     }
     return NULL;
 }

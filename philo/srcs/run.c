@@ -44,12 +44,22 @@ int	run(t_data *data)
 {
 	printf("Entered run\n");
 	pthread_t	*threads;
+	pthread_t	check_death;
 
 	threads = malloc(sizeof(pthread_t) * data->num_ph);
 	if (!threads)
 		return FAILURE;
 	if (create_threads(threads, data) == FAILURE)
 		return (free(threads), FAILURE);
+	if (pthread_create(&check_death, NULL, checker, data) != 0)
+	{
+		write(2, "Can't create monitor thread\n", 28);
+		data->end = 1; // tell philos to stop
+		join_threads(threads, data);
+		free(threads);
+		return (FAILURE);
+	}
+	pthread_join(check_death, NULL);
 	if (join_threads(threads, data) == FAILURE)
 		return (free(threads), FAILURE);
 	free(threads);

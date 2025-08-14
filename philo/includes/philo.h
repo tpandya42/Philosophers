@@ -26,6 +26,8 @@ typedef struct s_ph
 	int				num_eat;
 	long			last_time_eat;
 	bool			if_eat_max;
+	long			last_eaten;
+
 	t_chopstick		*left_stick;
 	t_chopstick		*right_stick;
 	t_data			*data;
@@ -42,6 +44,8 @@ struct s_data
 	long				must_eat;
 	long			start_time;
 	bool			end;
+	pthread_mutex_t		write;
+	pthread_mutex_t		death;
 	pthread_mutex_t		print;
 	t_chopstick		*stick;
 	t_ph			*philo;
@@ -56,6 +60,12 @@ typedef enum e_tasks
 	THINK,
 	DIE
 }					t_tasks;
+
+typedef enum e_bool
+{
+	FALSE,
+	TRUE
+}	t_bool;
 
 typedef enum e_status
 {
@@ -74,4 +84,6 @@ void	*routine(void *arg);
 void	clean_all_0(t_data *data);
 long	get_time_in_ms(void);
 void	error_exit(const char *error);
+void	*checker(void *arg);
+
 #endif
