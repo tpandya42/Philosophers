@@ -23,17 +23,10 @@ int content(t_data *data, char **av, int ac)
 		write(2, "Invalid number of arguments\n", 28);
 		return FAILURE;
 	}
-	printf("Starting parsing \n");
 	if (parse_number(av[1], &data->num_ph, 1, "Invalid number_of_philosophers") ||
-			parse_number(av[2], &data->ttd,    1000, "Invalid time_to_die") ||
-			parse_number(av[3], &data->tte,    1000, "Invalid time_to_eat") ||
-			parse_number(av[4], &data->tts,    1000, "Invalid time_to_sleep"))
-		return FAILURE;
-	printf("Parsed");
-
-
-	// ## TODO (did but now sure it is good >.<)
-	if (data->ttd < 6e4 || data->tte < 6e4 || data->tts < 6e4)
+			parse_number(av[2], &data->ttd,    1, "Invalid time_to_die") ||
+			parse_number(av[3], &data->tte,    1, "Invalid time_to_eat") ||
+			parse_number(av[4], &data->tts,    1, "Invalid time_to_sleep"))
 		return FAILURE;
 
 	if (ac == 6)

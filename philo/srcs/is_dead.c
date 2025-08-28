@@ -24,10 +24,9 @@ void	*checker(void *arg)
 				if (!data->end)
 				{
 					data->end = true;
-
-					pthread_mutex_lock(&data->write);   // protect log output
+					pthread_mutex_lock(&data->print);   // use unified print mutex
 					log_text(&data->philo[i], DIE);
-					pthread_mutex_unlock(&data->write);
+					pthread_mutex_unlock(&data->print);
 				}
 				pthread_mutex_unlock(&data->death);
 				pthread_mutex_unlock(&data->philo[i].lock);
@@ -35,7 +34,8 @@ void	*checker(void *arg)
 			}
 			if (data->philo[i].num_eat < data->must_eat)
 				all_done = 0;
-			pthread_mutex_unlock(&data->philo[i].lock);
+			// already unlocked above if dead, so only unlock if not dead
+			// pthread_mutex_unlock(&data->philo[i].lock); // avoid double unlock
 			i++;
 		}
 		if (all_done)

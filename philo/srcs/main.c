@@ -21,7 +21,6 @@ int main(int ac, char **av)
 		free(data);
 		return EXIT_FAILURE;
 	}
-	printf("%ld: \n", data->start_time);
 	clean_all_0(data);
 	free(data);
 	return EXIT_SUCCESS;

@@ -34,15 +34,13 @@ static const char *check_number(const char *str)
 
 long	ft_atol(const char *str)
 {
-	printf("Entering atol\n");
-	long	num;
+	long num;
 
 	num = 0;
 	str = check_number(str);
 	while (is_digit(*str))
 		num = (num * 10) + (*str++ - 48);
 	if (num > INT_MAX)
-		return FAILURE;
-	printf("exiting atol\n");
+		error_exit("Too Big");
 	return (num);
 }

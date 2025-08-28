@@ -46,7 +46,7 @@ void clean_all_0(t_data *data)
     }
 
     pthread_mutex_destroy(&data->death);
-    pthread_mutex_destroy(&data->write);
+    pthread_mutex_destroy(&data->print);
 }
 
 

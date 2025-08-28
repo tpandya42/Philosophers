@@ -11,7 +11,7 @@ static int	init_struct_data(t_data *data)
 	data->end = false;
 	data->stick = NULL;
 	data->philo = NULL;
-	pthread_mutex_init(&data->write, NULL);
+	// pthread_mutex_init(&data->write, NULL); // removed, use 'print' for logging
 	pthread_mutex_init(&data->death, NULL);
 	pthread_mutex_init(&data->print, NULL);
 	return (SUCCESS);
@@ -61,18 +61,13 @@ static int	init_struct_philo(t_data *data)
 
 int	init_init(t_data *data, char **av, int ac)
 {
-	printf("Enterred init_inint\n");
 	if (init_struct_data(data) == FAILURE)
 		return (FAILURE);
-	printf("data strucutre created\n");
 	if (content(data, av, ac) == FAILURE)
 		return (FAILURE);
-	printf("Content success\n");
 	if (data->num_ph <= 0 || data->ttd <= 0 || data->tte <= 0 || data->tts <= 0 || (ac == 6 && data->must_eat <= 0))
 		return (FAILURE);
 	if (init_chopsticks(data) == FAILURE)
 		return (FAILURE);
-	printf("got the sticks");
-	printf("InIn success\n");
 	return (init_struct_philo(data));
 }

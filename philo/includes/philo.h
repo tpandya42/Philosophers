@@ -44,7 +44,7 @@ struct s_data
 	long				must_eat;
 	long			start_time;
 	bool			end;
-	pthread_mutex_t		write;
+	// pthread_mutex_t		write; // removed, use 'print' for logging
 	pthread_mutex_t		death;
 	pthread_mutex_t		print;
 	t_chopstick		*stick;
