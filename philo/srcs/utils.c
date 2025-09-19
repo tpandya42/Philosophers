@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tpandya <tpandya@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/19 11:30:07 by tpandya           #+#    #+#             */
+/*   Updated: 2025/09/19 11:30:09 by tpandya          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 char	*ft_strcpy(char *dest, const char *src)
@@ -14,56 +26,42 @@ char	*ft_strcpy(char *dest, const char *src)
 	return (dest);
 }
 
-void clean_all_0(t_data *data)
-{
-    int i;
-
-    if (!data)
-        return;
-
-    if (data->philo)
-    {
-        i = 0;
-        while (i < data->num_ph)
-        {
-            pthread_mutex_destroy(&data->philo[i].lock);
-            i++;
-        }
-        free(data->philo);
-        data->philo = NULL;
-    }
-
-    if (data->stick)
-    {
-        i = 0;
-        while (i < data->num_ph)
-        {
-            pthread_mutex_destroy(&data->stick[i].stick);
-            i++;
-        }
-        free(data->stick);
-        data->stick = NULL;
-    }
-
-    pthread_mutex_destroy(&data->death);
-    pthread_mutex_destroy(&data->print);
-}
-
-
-
-int	ft_strlen(char *str)
+static void	destroy_philos(t_data *data)
 {
 	int	i;
 
-	i = -1;
-	while (str[++i])
+	i = 0;
+	while (i < data->num_ph)
+	{
+		pthread_mutex_destroy(&data->philo[i].lock);
 		i++;
-	return (i);
+	}
+	free(data->philo);
+	data->philo = NULL;
 }
 
-long get_time_in_ms(void)
+static void	destroy_sticks(t_data *data)
 {
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-    return (tv.tv_sec * 1000L) + (tv.tv_usec / 1000L);
+	int	i;
+
+	i = 0;
+	while (i < data->num_ph)
+	{
+		pthread_mutex_destroy(&data->stick[i].stick);
+		i++;
+	}
+	free(data->stick);
+	data->stick = NULL;
+}
+
+void	clean_all_0(t_data *data)
+{
+	if (!data)
+		return ;
+	if (data->philo)
+		destroy_philos(data);
+	if (data->stick)
+		destroy_sticks(data);
+	pthread_mutex_destroy(&data->death);
+	pthread_mutex_destroy(&data->print);
 }

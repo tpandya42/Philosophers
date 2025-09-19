@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tpandya <tpandya@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/19 11:28:09 by tpandya           #+#    #+#             */
+/*   Updated: 2025/09/19 11:28:10 by tpandya          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 static int	init_struct_data(t_data *data)
@@ -11,7 +23,6 @@ static int	init_struct_data(t_data *data)
 	data->end = false;
 	data->stick = NULL;
 	data->philo = NULL;
-	// pthread_mutex_init(&data->write, NULL); // removed, use 'print' for logging
 	pthread_mutex_init(&data->death, NULL);
 	pthread_mutex_init(&data->print, NULL);
 	return (SUCCESS);
@@ -47,7 +58,6 @@ static int	init_struct_philo(t_data *data)
 	{
 		data->philo[i].id = i + 1;
 		data->philo[i].num_eat = 0;
-		data->philo[i].last_time_eat = 0;
 		data->philo[i].if_eat_max = false;
 		data->philo[i].left_stick = &data->stick[i];
 		data->philo[i].right_stick = &data->stick[(i + 1) % data->num_ph];
@@ -65,7 +75,8 @@ int	init_init(t_data *data, char **av, int ac)
 		return (FAILURE);
 	if (content(data, av, ac) == FAILURE)
 		return (FAILURE);
-	if (data->num_ph <= 0 || data->ttd <= 0 || data->tte <= 0 || data->tts <= 0 || (ac == 6 && data->must_eat <= 0))
+	if (data->num_ph <= 0 || data->ttd <= 0 || data->tte <= 0 || data->tts <= 0
+		|| (ac == 6 && data->must_eat <= 0))
 		return (FAILURE);
 	if (init_chopsticks(data) == FAILURE)
 		return (FAILURE);

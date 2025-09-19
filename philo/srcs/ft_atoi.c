@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tpandya <tpandya@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/19 11:28:03 by tpandya           #+#    #+#             */
+/*   Updated: 2025/09/19 11:28:04 by tpandya          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 static int	is_space(char c)
@@ -10,9 +22,9 @@ static int	is_digit(char c)
 	return (c >= '0' && c <= '9');
 }
 
-static const char *check_number(const char *str)
+static const char	*check_number(const char *str)
 {
-	int	len;
+	int			len;
 	const char	*num;
 
 	len = 0;
@@ -20,21 +32,21 @@ static const char *check_number(const char *str)
 		++str;
 	if (*str == '+')
 		++str;
-	else if(*str == '-')
+	else if (*str == '-')
 		error_exit("NO negative\n");
-	if(!is_digit(*str))
+	if (!is_digit(*str))
 		error_exit("No digit");
 	num = str;
 	while (is_digit(*str++))
 		++len;
 	if (len > 10)
 		error_exit("Too BIg");
-	return num;
+	return (num);
 }
 
 long	ft_atol(const char *str)
 {
-	long num;
+	long	num;
 
 	num = 0;
 	str = check_number(str);
