@@ -32,13 +32,23 @@ void	log_text(t_ph *philo, t_tasks task)
 {
 	char				buffer[32];
 	long				timestamp;
+	int					should_print;
 
-	if (philo->data->end && task != DIE)
+	pthread_mutex_lock(&philo->data->death);
+	should_print = (!philo->data->end && task != DIE) || task == DIE;
+	pthread_mutex_unlock(&philo->data->death);
+	
+	if (!should_print && task != DIE)
 		return ;
+		
 	text(buffer, task);
 	timestamp = get_time_in_ms() - philo->data->start_time;
 	pthread_mutex_lock(&philo->data->print);
+	
+	pthread_mutex_lock(&philo->data->death);
 	if (!philo->data->end || task == DIE)
 		printf("%ld %d %s\n", timestamp, philo->id, buffer);
+	pthread_mutex_unlock(&philo->data->death);
+	
 	pthread_mutex_unlock(&philo->data->print);
 }

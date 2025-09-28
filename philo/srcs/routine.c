@@ -28,10 +28,10 @@ static void	update_num_eat(t_ph *philo)
 
 void	eating(t_ph *philo)
 {
-	if (philo->data->end)
+	if (is_simulation_ended(philo))
 		return ;
 	pick_up(philo);
-	if (philo->data->end)
+	if (is_simulation_ended(philo))
 		return ;
 	update_last_eaten(philo);
 	log_text(philo, EAT);
@@ -46,14 +46,14 @@ void	*routine(void *arg)
 
 	philo = (t_ph *)arg;
 	usleep(500);
-	while (!philo->data->end && !philo->if_eat_max)
+	while (!is_simulation_ended(philo) && !philo->if_eat_max)
 	{
 		eating(philo);
-		if (philo->data->end)
+		if (is_simulation_ended(philo))
 			break ;
 		if (philo->num_eat == philo->data->must_eat)
 			philo->if_eat_max = true;
-		else if (!philo->data->end)
+		else if (!is_simulation_ended(philo))
 			think(philo);
 	}
 	return (NULL);

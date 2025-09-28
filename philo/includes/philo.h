@@ -96,5 +96,6 @@ void					clean_all_0(t_data *data);
 long					get_time_in_ms(void);
 void					error_exit(const char *error);
 void					*checker(void *arg);
+int						is_simulation_ended(t_ph *philo);
 
 #endif
