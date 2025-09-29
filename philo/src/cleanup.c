@@ -4,7 +4,6 @@ void	cleanup_simulation(t_simulation *sim)
 {
 	int	i;
 
-	// Clean up philosopher mutexes
 	if (sim->thinkers)
 	{
 		i = 0;
@@ -17,8 +16,6 @@ void	cleanup_simulation(t_simulation *sim)
 		free(sim->thinkers);
 		sim->thinkers = NULL;
 	}
-	
-	// Clean up utensil mutexes
 	if (sim->utensils)
 	{
 		i = 0;
@@ -30,8 +27,6 @@ void	cleanup_simulation(t_simulation *sim)
 		free(sim->utensils);
 		sim->utensils = NULL;
 	}
-	
-	// Clean up global mutexes
 	pthread_mutex_destroy(&sim->end_simulation_mutex);
 	pthread_mutex_destroy(&sim->output_mutex);
 }

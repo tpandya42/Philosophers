@@ -24,7 +24,6 @@ static bool	check_philosopher_death(t_simulation *sim, int i)
 
 	current_time = get_current_time_ms();
 	time_since_last_bite = current_time - get_bite_time(&sim->thinkers[i]);
-	
 	if (time_since_last_bite >= sim->death_timer)
 	{
 		end_simulation(sim);
@@ -40,7 +39,6 @@ void	*supervise_deaths(void *simulation_ptr)
 	int				i;
 
 	sim = (t_simulation *)simulation_ptr;
-	
 	while (!check_simulation_end(sim))
 	{
 		i = 0;
@@ -50,9 +48,8 @@ void	*supervise_deaths(void *simulation_ptr)
 				return (NULL);
 			i++;
 		}
-		usleep(1000); // Check every 1 millisecond for better responsiveness
+		usleep(1000);
 	}
-	
 	return (NULL);
 }
 
@@ -75,7 +72,6 @@ void	*monitor_completion(void *simulation_ptr)
 	t_simulation	*sim;
 
 	sim = (t_simulation *)simulation_ptr;
-	
 	while (!check_simulation_end(sim) && sim->required_bites > 0)
 	{
 		if (all_philosophers_finished(sim))
@@ -83,8 +79,7 @@ void	*monitor_completion(void *simulation_ptr)
 			end_simulation(sim);
 			return (NULL);
 		}
-		usleep(1000); // Check every millisecond
+		usleep(1000);
 	}
-	
 	return (NULL);
 }

@@ -6,14 +6,12 @@ static int	create_philosopher_threads(t_simulation *sim)
 
 	i = 0;
 	sim->simulation_start = get_current_time_ms();
-	
 	while (i < sim->thinker_count)
 	{
 		update_bite_time(&sim->thinkers[i]);
-		if (pthread_create(&sim->thinkers[i].life_thread, NULL, 
-			philosopher_routine, &sim->thinkers[i]) != 0)
+		if (pthread_create(&sim->thinkers[i].life_thread, NULL,
+				philosopher_routine, &sim->thinkers[i]) != 0)
 		{
-			// Cleanup already created threads
 			while (--i >= 0)
 				pthread_join(sim->thinkers[i].life_thread, NULL);
 			return (1);
@@ -25,38 +23,36 @@ static int	create_philosopher_threads(t_simulation *sim)
 
 static int	create_monitoring_threads(t_simulation *sim)
 {
-	if (pthread_create(&sim->supervisor_thread, NULL, 
-		supervise_deaths, sim) != 0)
+	if (pthread_create(&sim->supervisor_thread, NULL, supervise_deaths,
+			sim) != 0)
 		return (1);
-	
 	if (sim->required_bites > 0)
 	{
-		if (pthread_create(&sim->completion_thread, NULL, 
-			monitor_completion, sim) != 0)
+		if (pthread_create(&sim->completion_thread, NULL, monitor_completion,
+				sim) != 0)
 		{
 			end_simulation(sim);
 			pthread_join(sim->supervisor_thread, NULL);
 			return (1);
 		}
 	}
-	
 	return (0);
 }
 
 int	launch_simulation(t_simulation *sim)
 {
+	int	i;
+
 	if (create_philosopher_threads(sim))
 		return (1);
-	
 	if (create_monitoring_threads(sim))
 	{
-		int	i = 0;
+		i = 0;
 		end_simulation(sim);
 		while (i < sim->thinker_count)
 			pthread_join(sim->thinkers[i++].life_thread, NULL);
 		return (1);
 	}
-	
 	return (0);
 }
 
@@ -64,17 +60,13 @@ int	terminate_simulation(t_simulation *sim)
 {
 	int	i;
 
-	// Wait for monitoring threads
 	if (pthread_join(sim->supervisor_thread, NULL) != 0)
 		return (1);
-	
 	if (sim->required_bites > 0)
 	{
 		if (pthread_join(sim->completion_thread, NULL) != 0)
 			return (1);
 	}
-	
-	// Wait for all philosopher threads
 	i = 0;
 	while (i < sim->thinker_count)
 	{
@@ -82,6 +74,5 @@ int	terminate_simulation(t_simulation *sim)
 			return (1);
 		i++;
 	}
-	
 	return (0);
 }

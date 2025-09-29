@@ -30,13 +30,4 @@ fclean: clean
 
 re: fclean all
 
-test: $(NAME)
-	@echo "🧪 Running tests..."
-	@echo "Test 1: Single philosopher (should die)"
-	@timeout 5s ./$(NAME) 1 800 200 200 || true
-	@echo "\nTest 2: 4 philosophers, no death"
-	@timeout 10s ./$(NAME) 4 800 200 200 || true
-	@echo "\nTest 3: 5 philosophers with meal limit"
-	@timeout 10s ./$(NAME) 5 800 200 200 5 || true
-
-.PHONY: all clean fclean re test
+.PHONY: all clean fclean re
