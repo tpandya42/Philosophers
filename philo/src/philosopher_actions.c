@@ -12,42 +12,6 @@
 
 #include "dining_philosophers.h"
 
-bool	take_sticks(t_thinker *philosopher)
-{
-	int	left_utensil;
-	int	right_utensil;
-
-	if (check_simulation_end(philosopher->sim))
-		return (false);
-	left_utensil = philosopher->philo_id - 1;
-	right_utensil = philosopher->philo_id % philosopher->sim->no_philo;
-	if (philosopher->philo_id % 2 == 1)
-	{
-		pthread_mutex_lock(&philosopher->sim->sticks[left_utensil]);
-		logging(philosopher, STICK);
-		if (check_simulation_end(philosopher->sim))
-		{
-			pthread_mutex_unlock(&philosopher->sim->sticks[left_utensil]);
-			return (false);
-		}
-		pthread_mutex_lock(&philosopher->sim->sticks[right_utensil]);
-		logging(philosopher, STICK);
-	}
-	else
-	{
-		pthread_mutex_lock(&philosopher->sim->sticks[right_utensil]);
-		logging(philosopher, STICK);
-		if (check_simulation_end(philosopher->sim))
-		{
-			pthread_mutex_unlock(&philosopher->sim->sticks[right_utensil]);
-			return (false);
-		}
-		pthread_mutex_lock(&philosopher->sim->sticks[left_utensil]);
-		logging(philosopher, STICK);
-	}
-	return (true);
-}
-
 void	drop(t_thinker *philosopher)
 {
 	int	left_utensil;

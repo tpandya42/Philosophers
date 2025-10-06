@@ -12,23 +12,6 @@
 
 #include "dining_philosophers.h"
 
-bool	check_simulation_end(t_simulation *sim)
-{
-	bool	result;
-
-	pthread_mutex_lock(&sim->end_simulation_mutex);
-	result = sim->simulation_over;
-	pthread_mutex_unlock(&sim->end_simulation_mutex);
-	return (result);
-}
-
-void	end_simulation(t_simulation *sim)
-{
-	pthread_mutex_lock(&sim->end_simulation_mutex);
-	sim->simulation_over = true;
-	pthread_mutex_unlock(&sim->end_simulation_mutex);
-}
-
 static bool	check_philosopher_death(t_simulation *sim, int i)
 {
 	long	current_time;

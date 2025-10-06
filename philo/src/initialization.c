@@ -26,7 +26,7 @@ static int	allocate_resources(t_simulation *sim)
 	return (0);
 }
 
-static int	setup_utensils(t_simulation *sim)
+static int	setup_chopsticks(t_simulation *sim)
 {
 	int	i;
 
@@ -86,7 +86,7 @@ int	initialize_simulation(t_simulation *sim, int argc, char **argv)
 	sim->simulation_over = false;
 	if (allocate_resources(sim))
 		return (1);
-	if (setup_utensils(sim))
+	if (setup_chopsticks(sim))
 	{
 		free(sim->philos);
 		free(sim->sticks);

@@ -12,6 +12,8 @@
 
 #include "dining_philosophers.h"
 
+/*Have to update time becauseee the death_checker might 
+ * misread our philo as starving even before they run.. */
 static int	create_philosopher_threads(t_simulation *sim)
 {
 	int	i;
