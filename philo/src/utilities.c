@@ -26,7 +26,7 @@ void	logging(t_thinker *philosopher, t_action action)
 	const char	*action_str;
 
 	if (action == STICK)
-		action_str = "has taken a stick";
+		action_str = "has taken a fork";
 	else if (action == EAT)
 		action_str = "is eating";
 	else if (action == SLEEP)

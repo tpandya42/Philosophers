@@ -77,12 +77,12 @@ int							terminate_simulation(t_simulation *sim);
 void						cleanup_simulation(t_simulation *sim);
 
 // Philosopher lifecycle
-void						*routine(void *philosopher);
-void						take_sticks(t_thinker *philosopher);
-void						drop(t_thinker *philosopher);
-void						eatting(t_thinker *philosopher);
-void						take_rest(t_thinker *philosopher);
-void						thinking(t_thinker *philosopher);
+void					*routine(void *philosopher);
+bool					take_sticks(t_thinker *philosopher);
+void					drop(t_thinker *philosopher);
+void					eatting(t_thinker *philosopher);
+void					take_rest(t_thinker *philosopher);
+void					thinking(t_thinker *philosopher);
 
 // Monitoring functions
 void						*death_checker(void *simulation);
