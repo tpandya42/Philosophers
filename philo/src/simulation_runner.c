@@ -6,14 +6,14 @@ static int	create_philosopher_threads(t_simulation *sim)
 
 	i = 0;
 	sim->simulation_start = get_current_time_ms();
-	while (i < sim->thinker_count)
+	while (i < sim->no_philo)
 	{
-		update_bite_time(&sim->thinkers[i]);
-		if (pthread_create(&sim->thinkers[i].life_thread, NULL,
-				philosopher_routine, &sim->thinkers[i]) != 0)
+		update_time(&sim->philos[i]);
+		if (pthread_create(&sim->philos[i].life_thread, NULL,
+			routine, &sim->philos[i]) != 0)
 		{
 			while (--i >= 0)
-				pthread_join(sim->thinkers[i].life_thread, NULL);
+				pthread_join(sim->philos[i].life_thread, NULL);
 			return (1);
 		}
 		i++;
@@ -23,16 +23,16 @@ static int	create_philosopher_threads(t_simulation *sim)
 
 static int	create_monitoring_threads(t_simulation *sim)
 {
-	if (pthread_create(&sim->supervisor_thread, NULL, supervise_deaths,
+	if (pthread_create(&sim->monitor_thread, NULL, death_checker,
 			sim) != 0)
 		return (1);
-	if (sim->required_bites > 0)
+	if (sim->max_eat_count > 0)
 	{
-		if (pthread_create(&sim->completion_thread, NULL, monitor_completion,
+		if (pthread_create(&sim->completion_thread, NULL, completion_watch,
 				sim) != 0)
 		{
 			end_simulation(sim);
-			pthread_join(sim->supervisor_thread, NULL);
+			pthread_join(sim->monitor_thread, NULL);
 			return (1);
 		}
 	}
@@ -49,8 +49,8 @@ int	launch_simulation(t_simulation *sim)
 	{
 		i = 0;
 		end_simulation(sim);
-		while (i < sim->thinker_count)
-			pthread_join(sim->thinkers[i++].life_thread, NULL);
+		while (i < sim->no_philo)
+			pthread_join(sim->philos[i++].life_thread, NULL);
 		return (1);
 	}
 	return (0);
@@ -60,17 +60,17 @@ int	terminate_simulation(t_simulation *sim)
 {
 	int	i;
 
-	if (pthread_join(sim->supervisor_thread, NULL) != 0)
+	if (pthread_join(sim->monitor_thread, NULL) != 0)
 		return (1);
-	if (sim->required_bites > 0)
+	if (sim->max_eat_count > 0)
 	{
 		if (pthread_join(sim->completion_thread, NULL) != 0)
 			return (1);
 	}
 	i = 0;
-	while (i < sim->thinker_count)
+	while (i < sim->no_philo)
 	{
-		if (pthread_join(sim->thinkers[i].life_thread, NULL) != 0)
+		if (pthread_join(sim->philos[i].life_thread, NULL) != 0)
 			return (1);
 		i++;
 	}

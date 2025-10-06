@@ -1,113 +1,113 @@
 #include "dining_philosophers.h"
 
-void	acquire_utensils(t_thinker *philosopher)
+void	take_sticks(t_thinker *philosopher)
 {
 	int	left_utensil;
 	int	right_utensil;
 
 	if (check_simulation_end(philosopher->sim))
 		return ;
-	left_utensil = philosopher->number - 1;
-	right_utensil = philosopher->number % philosopher->sim->thinker_count;
-	if (philosopher->number % 2 == 1)
+	left_utensil = philosopher->philo_id - 1;
+	right_utensil = philosopher->philo_id % philosopher->sim->no_philo;
+	if (philosopher->philo_id % 2 == 1)
 	{
-		pthread_mutex_lock(&philosopher->sim->utensils[left_utensil]);
-		log_philosopher_action(philosopher, TAKE_UTENSIL);
+		pthread_mutex_lock(&philosopher->sim->sticks[left_utensil]);
+		log(philosopher, STICK);
 		if (check_simulation_end(philosopher->sim))
 		{
-			pthread_mutex_unlock(&philosopher->sim->utensils[left_utensil]);
+			pthread_mutex_unlock(&philosopher->sim->sticks[left_utensil]);
 			return ;
 		}
-		pthread_mutex_lock(&philosopher->sim->utensils[right_utensil]);
-		log_philosopher_action(philosopher, TAKE_UTENSIL);
+		pthread_mutex_lock(&philosopher->sim->sticks[right_utensil]);
+		log(philosopher, STICK);
 	}
 	else
 	{
-		pthread_mutex_lock(&philosopher->sim->utensils[right_utensil]);
-		log_philosopher_action(philosopher, TAKE_UTENSIL);
+		pthread_mutex_lock(&philosopher->sim->sticks[right_utensil]);
+		log(philosopher, STICK);
 		if (check_simulation_end(philosopher->sim))
 		{
-			pthread_mutex_unlock(&philosopher->sim->utensils[right_utensil]);
+			pthread_mutex_unlock(&philosopher->sim->sticks[right_utensil]);
 			return ;
 		}
-		pthread_mutex_lock(&philosopher->sim->utensils[left_utensil]);
-		log_philosopher_action(philosopher, TAKE_UTENSIL);
+		pthread_mutex_lock(&philosopher->sim->sticks[left_utensil]);
+		log(philosopher, STICK);
 	}
 }
 
-void	release_utensils(t_thinker *philosopher)
+void	drop(t_thinker *philosopher)
 {
 	int	left_utensil;
 	int	right_utensil;
 
-	left_utensil = philosopher->number - 1;
-	right_utensil = philosopher->number % philosopher->sim->thinker_count;
-	if (philosopher->number % 2 == 1)
+	left_utensil = philosopher->philo_id - 1;
+	right_utensil = philosopher->philo_id % philosopher->sim->no_philo;
+	if (philosopher->philo_id % 2 == 1)
 	{
-		pthread_mutex_unlock(&philosopher->sim->utensils[right_utensil]);
-		pthread_mutex_unlock(&philosopher->sim->utensils[left_utensil]);
+		pthread_mutex_unlock(&philosopher->sim->sticks[right_utensil]);
+		pthread_mutex_unlock(&philosopher->sim->sticks[left_utensil]);
 	}
 	else
 	{
-		pthread_mutex_unlock(&philosopher->sim->utensils[left_utensil]);
-		pthread_mutex_unlock(&philosopher->sim->utensils[right_utensil]);
+		pthread_mutex_unlock(&philosopher->sim->sticks[left_utensil]);
+		pthread_mutex_unlock(&philosopher->sim->sticks[right_utensil]);
 	}
 }
 
-void	consume_meal(t_thinker *philosopher)
+void	eatting(t_thinker *philosopher)
 {
 	if (check_simulation_end(philosopher->sim))
 		return ;
-	acquire_utensils(philosopher);
+	take_sticks(philosopher);
 	if (check_simulation_end(philosopher->sim))
 	{
-		release_utensils(philosopher);
+		drop(philosopher);
 		return ;
 	}
-	update_bite_time(philosopher);
-	log_philosopher_action(philosopher, CONSUME_FOOD);
-	precise_sleep(philosopher->sim->eating_duration);
-	increment_bite_count(philosopher);
-	release_utensils(philosopher);
+	update_time(philosopher);
+	log(philosopher, EAT);
+	sleep(philosopher->sim->time_to_eat);
+	increment_bites(philosopher);
+	drop(philosopher);
 }
 
 void	take_rest(t_thinker *philosopher)
 {
 	if (check_simulation_end(philosopher->sim))
 		return ;
-	log_philosopher_action(philosopher, REST);
-	precise_sleep(philosopher->sim->sleeping_duration);
+	log(philosopher, SLEEP);
+	sleep(philosopher->sim->time_to_sleep);
 }
 
-void	think_deeply(t_thinker *philosopher)
+void	thinking(t_thinker *philosopher)
 {
 	if (check_simulation_end(philosopher->sim))
 		return ;
-	log_philosopher_action(philosopher, CONTEMPLATE);
+	log(philosopher, THINK);
 	usleep(1000);
 }
 
-void	*philosopher_routine(void *philosopher_ptr)
+void	*routine(void *philosopher_ptr)
 {
 	t_thinker	*philosopher;
 
 	philosopher = (t_thinker *)philosopher_ptr;
-	if (philosopher->number % 2 == 0)
+	if (philosopher->philo_id % 2 == 0)
 		usleep(1000);
 	while (!check_simulation_end(philosopher->sim)
 		&& !philosopher->finished_eating)
 	{
-		consume_meal(philosopher);
+		eatting(philosopher);
 		if (check_simulation_end(philosopher->sim))
 			break ;
-		if (philosopher->sim->required_bites > 0
-			&& get_bite_count(philosopher) >= philosopher->sim->required_bites)
+		if (philosopher->sim->max_eat_count > 0
+			&& get_bite_count(philosopher) >= philosopher->sim->max_eat_count)
 		{
 			philosopher->finished_eating = true;
 			break ;
 		}
 		take_rest(philosopher);
-		think_deeply(philosopher);
+		thinking(philosopher);
 	}
 	return (NULL);
 }

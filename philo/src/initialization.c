@@ -2,13 +2,13 @@
 
 static int	allocate_resources(t_simulation *sim)
 {
-	sim->thinkers = malloc(sizeof(t_thinker) * sim->thinker_count);
-	if (!sim->thinkers)
+	sim->philos = malloc(sizeof(t_thinker) * sim->no_philo);
+	if (!sim->philos)
 		return (1);
-	sim->utensils = malloc(sizeof(pthread_mutex_t) * sim->thinker_count);
-	if (!sim->utensils)
+	sim->sticks = malloc(sizeof(pthread_mutex_t) * sim->no_philo);
+	if (!sim->sticks)
 	{
-		free(sim->thinkers);
+		free(sim->philos);
 		return (1);
 	}
 	return (0);
@@ -19,12 +19,12 @@ static int	setup_utensils(t_simulation *sim)
 	int	i;
 
 	i = 0;
-	while (i < sim->thinker_count)
+	while (i < sim->no_philo)
 	{
-		if (pthread_mutex_init(&sim->utensils[i], NULL) != 0)
+		if (pthread_mutex_init(&sim->sticks[i], NULL) != 0)
 		{
 			while (--i >= 0)
-				pthread_mutex_destroy(&sim->utensils[i]);
+				pthread_mutex_destroy(&sim->sticks[i]);
 			return (1);
 		}
 		i++;
@@ -37,17 +37,17 @@ static int	setup_philosophers(t_simulation *sim)
 	int	i;
 
 	i = 0;
-	while (i < sim->thinker_count)
+	while (i < sim->no_philo)
 	{
-		sim->thinkers[i].number = i + 1;
-		sim->thinkers[i].bites_consumed = 0;
-		sim->thinkers[i].finished_eating = false;
-		sim->thinkers[i].sim = sim;
-		if (pthread_mutex_init(&sim->thinkers[i].bite_time_mutex, NULL) != 0)
+		sim->philos[i].philo_id = i + 1;
+		sim->philos[i].times_eaten = 0;
+		sim->philos[i].finished_eating = false;
+		sim->philos[i].sim = sim;
+		if (pthread_mutex_init(&sim->philos[i].eat_time_mutex, NULL) != 0)
 			return (1);
-		if (pthread_mutex_init(&sim->thinkers[i].bite_count_mutex, NULL) != 0)
+		if (pthread_mutex_init(&sim->philos[i].eat_count_mutex, NULL) != 0)
 		{
-			pthread_mutex_destroy(&sim->thinkers[i].bite_time_mutex);
+			pthread_mutex_destroy(&sim->philos[i].eat_time_mutex);
 			return (1);
 		}
 		i++;
@@ -76,8 +76,8 @@ int	initialize_simulation(t_simulation *sim, int argc, char **argv)
 		return (1);
 	if (setup_utensils(sim))
 	{
-		free(sim->thinkers);
-		free(sim->utensils);
+		free(sim->philos);
+		free(sim->sticks);
 		return (1);
 	}
 	if (setup_philosophers(sim))

@@ -4,28 +4,28 @@ void	cleanup_simulation(t_simulation *sim)
 {
 	int	i;
 
-	if (sim->thinkers)
+	if (sim->philos)
 	{
 		i = 0;
-		while (i < sim->thinker_count)
+		while (i < sim->no_philo)
 		{
-			pthread_mutex_destroy(&sim->thinkers[i].bite_time_mutex);
-			pthread_mutex_destroy(&sim->thinkers[i].bite_count_mutex);
+			pthread_mutex_destroy(&sim->philos[i].eat_time_mutex);
+			pthread_mutex_destroy(&sim->philos[i].eat_count_mutex);
 			i++;
 		}
-		free(sim->thinkers);
-		sim->thinkers = NULL;
+		free(sim->philos);
+		sim->philos = NULL;
 	}
-	if (sim->utensils)
+	if (sim->sticks)
 	{
 		i = 0;
-		while (i < sim->thinker_count)
+		while (i < sim->no_philo)
 		{
-			pthread_mutex_destroy(&sim->utensils[i]);
+			pthread_mutex_destroy(&sim->sticks[i]);
 			i++;
 		}
-		free(sim->utensils);
-		sim->utensils = NULL;
+		free(sim->sticks);
+		sim->sticks = NULL;
 	}
 	pthread_mutex_destroy(&sim->end_simulation_mutex);
 	pthread_mutex_destroy(&sim->output_mutex);

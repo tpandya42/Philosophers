@@ -23,17 +23,17 @@ static bool	check_philosopher_death(t_simulation *sim, int i)
 	long	time_since_last_bite;
 
 	current_time = get_current_time_ms();
-	time_since_last_bite = current_time - get_bite_time(&sim->thinkers[i]);
+	time_since_last_bite = current_time - eat_time(&sim->philos[i]);
 	if (time_since_last_bite >= sim->death_timer)
 	{
 		end_simulation(sim);
-		log_philosopher_action(&sim->thinkers[i], PERISH);
+		log(&sim->philos[i], DIE);
 		return (true);
 	}
 	return (false);
 }
 
-void	*supervise_deaths(void *simulation_ptr)
+void	*death_checker(void *simulation_ptr)
 {
 	t_simulation	*sim;
 	int				i;
@@ -42,7 +42,7 @@ void	*supervise_deaths(void *simulation_ptr)
 	while (!check_simulation_end(sim))
 	{
 		i = 0;
-		while (i < sim->thinker_count && !check_simulation_end(sim))
+		while (i < sim->no_philo && !check_simulation_end(sim))
 		{
 			if (check_philosopher_death(sim, i))
 				return (NULL);
@@ -58,21 +58,21 @@ static bool	all_philosophers_finished(t_simulation *sim)
 	int	i;
 
 	i = 0;
-	while (i < sim->thinker_count)
+	while (i < sim->no_philo)
 	{
-		if (get_bite_count(&sim->thinkers[i]) < sim->required_bites)
+		if (get_bite_count(&sim->philos[i]) < sim->max_eat_count)
 			return (false);
 		i++;
 	}
 	return (true);
 }
 
-void	*monitor_completion(void *simulation_ptr)
+void	*completion_watch(void *simulation_ptr)
 {
 	t_simulation	*sim;
 
 	sim = (t_simulation *)simulation_ptr;
-	while (!check_simulation_end(sim) && sim->required_bites > 0)
+	while (!check_simulation_end(sim) && sim->max_eat_count > 0)
 	{
 		if (all_philosophers_finished(sim))
 		{

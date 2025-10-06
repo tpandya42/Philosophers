@@ -19,42 +19,42 @@ typedef struct s_thinker	t_thinker;
 // Individual philosopher structure
 struct s_thinker
 {
-	int					number;
-	long				time_last_bite;
-	int					bites_consumed;
+	int				philo_id;
+	long				last_eatten;
+	int				times_eaten;
 	bool				finished_eating;
 	t_simulation		*sim;
 	pthread_t			life_thread;
-	pthread_mutex_t		bite_time_mutex;
-	pthread_mutex_t		bite_count_mutex;
+	pthread_mutex_t	eat_time_mutex;
+	pthread_mutex_t	eat_count_mutex;
 };
 
 // Main simulation data
 struct s_simulation
 {
-	int					thinker_count;
-	int					death_timer;
-	int					eating_duration;
-	int					sleeping_duration;
-	int					required_bites;
+	int				no_philo;
+	int				death_timer;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				max_eat_count;
 	long				simulation_start;
 	bool				simulation_over;
-	pthread_t			supervisor_thread;
+	pthread_t			monitor_thread;
 	pthread_t			completion_thread;
-	t_thinker			*thinkers;
-	pthread_mutex_t		end_simulation_mutex;
-	pthread_mutex_t		output_mutex;
-	pthread_mutex_t		*utensils;
+	t_thinker			*philos;
+	pthread_mutex_t	end_simulation_mutex;
+	pthread_mutex_t	output_mutex;
+	pthread_mutex_t	*sticks;
 };
 
 // Action types for logging
 typedef enum e_action
 {
-	TAKE_UTENSIL,
-	CONSUME_FOOD,
-	REST,
-	CONTEMPLATE,
-	PERISH
+	STICK,
+	EAT,
+	SLEEP,
+	THINK,
+	DIE
 }	t_action;
 
 // Core simulation functions
@@ -64,29 +64,30 @@ int		terminate_simulation(t_simulation *sim);
 void	cleanup_simulation(t_simulation *sim);
 
 // Philosopher lifecycle
-void	*philosopher_routine(void *philosopher);
-void	acquire_utensils(t_thinker *philosopher);
-void	release_utensils(t_thinker *philosopher);
-void	consume_meal(t_thinker *philosopher);
+void	*routine(void *philosopher);
+void	take_sticks(t_thinker *philosopher);
+void	drop(t_thinker *philosopher);
+void	eatting(t_thinker *philosopher);
 void	take_rest(t_thinker *philosopher);
-void	think_deeply(t_thinker *philosopher);
+void	thinking(t_thinker *philosopher);
 
 // Monitoring functions
-void	*supervise_deaths(void *simulation);
-void	*monitor_completion(void *simulation);
+void	*death_checker(void *simulation);
+void	*completion_watch(void *simulation);
 bool	check_simulation_end(t_simulation *sim);
 void	end_simulation(t_simulation *sim);
 
 // Synchronization helpers
-long	get_bite_time(t_thinker *philosopher);
-void	update_bite_time(t_thinker *philosopher);
+long	eat_time(t_thinker *philosopher);
+void	update_time(t_thinker *philosopher);
 int		get_bite_count(t_thinker *philosopher);
-void	increment_bite_count(t_thinker *philosopher);
+void	increment_bites(t_thinker *philosopher);
 
 // Utility functions
 long	get_current_time_ms(void);
-void	log_philosopher_action(t_thinker *philosopher, t_action action);
-int		parse_positive_int(const char *str);
-void	precise_sleep(int duration_ms);
+void	philosopher_log(t_thinker *philosopher, t_action action);
+#define log philosopher_log
+int	parse(const char *str);
+unsigned int	sleep(unsigned int duration_ms);
 
 #endif
