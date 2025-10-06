@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philosopher_actions.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tpandya <tpandya@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/06 14:48:57 by tpandya           #+#    #+#             */
+/*   Updated: 2025/10/06 14:48:58 by tpandya          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "dining_philosophers.h"
 
 void	take_sticks(t_thinker *philosopher)
@@ -12,26 +24,26 @@ void	take_sticks(t_thinker *philosopher)
 	if (philosopher->philo_id % 2 == 1)
 	{
 		pthread_mutex_lock(&philosopher->sim->sticks[left_utensil]);
-		log(philosopher, STICK);
+		logging(philosopher, STICK);
 		if (check_simulation_end(philosopher->sim))
 		{
 			pthread_mutex_unlock(&philosopher->sim->sticks[left_utensil]);
 			return ;
 		}
 		pthread_mutex_lock(&philosopher->sim->sticks[right_utensil]);
-		log(philosopher, STICK);
+		logging(philosopher, STICK);
 	}
 	else
 	{
 		pthread_mutex_lock(&philosopher->sim->sticks[right_utensil]);
-		log(philosopher, STICK);
+		logging(philosopher, STICK);
 		if (check_simulation_end(philosopher->sim))
 		{
 			pthread_mutex_unlock(&philosopher->sim->sticks[right_utensil]);
 			return ;
 		}
 		pthread_mutex_lock(&philosopher->sim->sticks[left_utensil]);
-		log(philosopher, STICK);
+		logging(philosopher, STICK);
 	}
 }
 
@@ -65,7 +77,7 @@ void	eatting(t_thinker *philosopher)
 		return ;
 	}
 	update_time(philosopher);
-	log(philosopher, EAT);
+	logging(philosopher, EAT);
 	sleep(philosopher->sim->time_to_eat);
 	increment_bites(philosopher);
 	drop(philosopher);
@@ -75,7 +87,7 @@ void	take_rest(t_thinker *philosopher)
 {
 	if (check_simulation_end(philosopher->sim))
 		return ;
-	log(philosopher, SLEEP);
+	logging(philosopher, SLEEP);
 	sleep(philosopher->sim->time_to_sleep);
 }
 
@@ -83,7 +95,7 @@ void	thinking(t_thinker *philosopher)
 {
 	if (check_simulation_end(philosopher->sim))
 		return ;
-	log(philosopher, THINK);
+	logging(philosopher, THINK);
 	usleep(1000);
 }
 

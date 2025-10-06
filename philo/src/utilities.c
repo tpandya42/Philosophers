@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utilities.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tpandya <tpandya@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/06 14:49:16 by tpandya           #+#    #+#             */
+/*   Updated: 2025/10/06 14:49:17 by tpandya          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "dining_philosophers.h"
 
 long	get_current_time_ms(void)
@@ -8,7 +20,7 @@ long	get_current_time_ms(void)
 	return ((current_time.tv_sec * 1000) + (current_time.tv_usec / 1000));
 }
 
-void	philosopher_log(t_thinker *philosopher, t_action action)
+void	logging(t_thinker *philosopher, t_action action)
 {
 	long		timestamp;
 	const char	*action_str;

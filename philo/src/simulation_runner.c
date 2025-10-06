@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   simulation_runner.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tpandya <tpandya@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/06 14:49:06 by tpandya           #+#    #+#             */
+/*   Updated: 2025/10/06 14:49:07 by tpandya          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "dining_philosophers.h"
 
 static int	create_philosopher_threads(t_simulation *sim)
@@ -9,8 +21,8 @@ static int	create_philosopher_threads(t_simulation *sim)
 	while (i < sim->no_philo)
 	{
 		update_time(&sim->philos[i]);
-		if (pthread_create(&sim->philos[i].life_thread, NULL,
-			routine, &sim->philos[i]) != 0)
+		if (pthread_create(&sim->philos[i].life_thread, NULL, routine,
+				&sim->philos[i]) != 0)
 		{
 			while (--i >= 0)
 				pthread_join(sim->philos[i].life_thread, NULL);
@@ -23,8 +35,7 @@ static int	create_philosopher_threads(t_simulation *sim)
 
 static int	create_monitoring_threads(t_simulation *sim)
 {
-	if (pthread_create(&sim->monitor_thread, NULL, death_checker,
-			sim) != 0)
+	if (pthread_create(&sim->monitor_thread, NULL, death_checker, sim) != 0)
 		return (1);
 	if (sim->max_eat_count > 0)
 	{

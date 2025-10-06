@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   monitoring.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tpandya <tpandya@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/06 14:48:48 by tpandya           #+#    #+#             */
+/*   Updated: 2025/10/06 14:48:50 by tpandya          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "dining_philosophers.h"
 
 bool	check_simulation_end(t_simulation *sim)
@@ -27,7 +39,7 @@ static bool	check_philosopher_death(t_simulation *sim, int i)
 	if (time_since_last_bite >= sim->death_timer)
 	{
 		end_simulation(sim);
-		log(&sim->philos[i], DIE);
+		logging(&sim->philos[i], DIE);
 		return (true);
 	}
 	return (false);

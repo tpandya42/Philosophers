@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tpandya <tpandya@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/06 14:48:40 by tpandya           #+#    #+#             */
+/*   Updated: 2025/10/06 14:48:42 by tpandya          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "dining_philosophers.h"
 
 static int	handle_single_philosopher(t_simulation *sim)
@@ -13,33 +25,23 @@ static int	validate_and_parse_args(int argc, char **argv, t_simulation *sim)
 {
 	if (argc != 5 && argc != 6)
 	{
-		printf("Usage:\n\t%s <philosophers> <die_time> <eat_time> <sleep_time> [must_eat]\n",
-			argv[0]);
+		printf("Insert Correct Input\n");
 		return (1);
 	}
 	sim->no_philo = parse(argv[1]);
 	sim->death_timer = parse(argv[2]);
 	sim->time_to_eat = parse(argv[3]);
 	sim->time_to_sleep = parse(argv[4]);
-	if (sim->no_philo <= 0 || sim->death_timer <= 0
-		|| sim->time_to_eat <= 0 || sim->time_to_sleep <= 0)
-	{
-		printf("Error: All arguments must be positive integers\n");
-		return (1);
-	}
+	if (sim->no_philo <= 0 || sim->death_timer <= 0 || sim->time_to_eat <= 0
+		|| sim->time_to_sleep <= 0)
+		return (printf("Pos Input Only\n"), 1);
 	if (sim->no_philo > MAX_PHILOSOPHERS)
-	{
-		printf("Error: Too many philosophers (max %d)\n", MAX_PHILOSOPHERS);
-		return (1);
-	}
+		return (printf("Too many Philos\n"), 1);
 	if (argc == 6)
 	{
 		sim->max_eat_count = parse(argv[5]);
 		if (sim->max_eat_count <= 0)
-		{
-			printf("Error: Required meals must be positive\n");
-			return (1);
-		}
+			return (printf("Required meals must be pos\n"), 1);
 	}
 	else
 		sim->max_eat_count = -1;
@@ -50,7 +52,6 @@ int	main(int argc, char **argv)
 {
 	t_simulation	sim;
 
-	printf("DEBUG: Starting main with %d arguments\n", argc);
 	if (validate_and_parse_args(argc, argv, &sim))
 		return (1);
 	if (sim.no_philo == 1)
@@ -66,7 +67,6 @@ int	main(int argc, char **argv)
 		cleanup_simulation(&sim);
 		return (1);
 	}
-	printf("DEBUG: Terminating simulation\n");
 	if (terminate_simulation(&sim))
 	{
 		printf("Error: Failed to terminate simulation cleanly\n");
