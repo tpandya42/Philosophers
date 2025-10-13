@@ -15,11 +15,11 @@
 static bool	check_philosopher_death(t_simulation *sim, int i)
 {
 	long	current_time;
-	long	time_since_last_bite;
+	long	time_since_last_eat;
 
 	current_time = get_current_time_ms();
-	time_since_last_bite = current_time - eat_time(&sim->philos[i]);
-	if (time_since_last_bite >= sim->death_timer)
+	time_since_last_eat = current_time - eat_time(&sim->philos[i]);
+	if (time_since_last_eat >= sim->death_timer)
 	{
 		end_simulation(sim);
 		logging(&sim->philos[i], DIE);
@@ -55,7 +55,7 @@ static bool	all_philosophers_finished(t_simulation *sim)
 	i = 0;
 	while (i < sim->no_philo)
 	{
-		if (get_bite_count(&sim->philos[i]) < sim->max_eat_count)
+		if (get_eat_count(&sim->philos[i]) < sim->max_eat_count)
 			return (false);
 		i++;
 	}

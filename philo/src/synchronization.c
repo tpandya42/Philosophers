@@ -29,7 +29,7 @@ void	update_time(t_thinker *philosopher)
 	pthread_mutex_unlock(&philosopher->eat_time_mutex);
 }
 
-int	get_bite_count(t_thinker *philosopher)
+int	get_eat_count(t_thinker *philosopher)
 {
 	int	count;
 

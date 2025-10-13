@@ -3,7 +3,16 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -pthread -g
 
 SRC_DIR = src
-SRC = $(wildcard $(SRC_DIR)/*.c)
+SRC = \
+	$(SRC_DIR)/cleanup.c \
+	$(SRC_DIR)/initialization.c \
+	$(SRC_DIR)/main.c \
+	$(SRC_DIR)/monitoring.c \
+	$(SRC_DIR)/monitoring_utils.c \
+	$(SRC_DIR)/philosopher_actions.c \
+	$(SRC_DIR)/simulation_runner.c \
+	$(SRC_DIR)/synchronization.c \
+	$(SRC_DIR)/utilities.c
 OBJ_DIR = obj
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 INC_DIR = include

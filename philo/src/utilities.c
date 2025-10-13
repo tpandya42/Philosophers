@@ -46,6 +46,37 @@ void	logging(t_thinker *philosopher, t_action action)
 	pthread_mutex_unlock(&philosopher->sim->output_mutex);
 }
 
+int	parse(const char *str)
+{
+	long    result;
+	int     i;
+
+	if (!str || !str[0])
+		return (-1);
+	result = 0;
+	i = 0;
+	while (str[i] == ' ' || str[i] == '\t')
+		i++;
+	if (str[i] == '+')
+		i++;
+	else if (str[i] == '-')
+		return (-1);
+	if (str[i] < '0' || str[i] > '9')
+		return (-1);
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		result = result * 10 + (str[i] - '0');
+		if (result > INT_MAX)
+			return (-1);
+		i++;
+	}
+	while (str[i] == ' ' || str[i] == '\t')
+		i++;
+	if (str[i] != '\0')
+		return (-1);
+	return ((int)result);
+}
+
 unsigned int	sleep(unsigned int duration_ms)
 {
 	usleep(duration_ms * 1000);

@@ -79,7 +79,7 @@ void	*routine(void *philosopher_ptr)
 		if (check_simulation_end(philosopher->sim))
 			break ;
 		if (philosopher->sim->max_eat_count > 0
-			&& get_bite_count(philosopher) >= philosopher->sim->max_eat_count)
+			&& get_eat_count(philosopher) >= philosopher->sim->max_eat_count)
 		{
 			philosopher->finished_eating = true;
 			break ;
