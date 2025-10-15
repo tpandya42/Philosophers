@@ -46,7 +46,7 @@ void	logging(t_thinker *philosopher, t_action action)
 	pthread_mutex_unlock(&philosopher->sim->output_mutex);
 }
 
-int	parse(const char *str)
+int	philo_atoi(const char *str)
 {
 	long    result;
 	int     i;
