@@ -12,7 +12,7 @@
 
 #include "dining_philosophers.h"
 
-static int	allocate_resources(t_simulation *sim)
+static int	init_philos_mutexes(t_simulation *sim)
 {
 	sim->philos = malloc(sizeof(t_thinker) * sim->no_philo);
 	if (!sim->philos)
@@ -26,7 +26,7 @@ static int	allocate_resources(t_simulation *sim)
 	return (0);
 }
 
-static int	setup_chopsticks(t_simulation *sim)
+static int	init_chopsticks(t_simulation *sim)
 {
 	int	i;
 
@@ -84,9 +84,9 @@ int	initialize_simulation(t_simulation *sim, int argc, char **argv)
 	(void)argc;
 	(void)argv;
 	sim->simulation_over = false;
-	if (allocate_resources(sim))
+	if (init_philos_mutexes(sim))
 		return (1);
-	if (setup_chopsticks(sim))
+	if (init_chopsticks(sim))
 	{
 		free(sim->philos);
 		free(sim->sticks);

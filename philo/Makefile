@@ -8,8 +8,8 @@ SRC = \
 	$(SRC_DIR)/initialization.c \
 	$(SRC_DIR)/main.c \
 	$(SRC_DIR)/monitoring.c \
-	$(SRC_DIR)/monitoring_utils.c \
-	$(SRC_DIR)/philosopher_actions.c \
+	$(SRC_DIR)/utils_routine_monitoring.c \
+	$(SRC_DIR)/routine.c \
 	$(SRC_DIR)/simulation_runner.c \
 	$(SRC_DIR)/synchronization.c \
 	$(SRC_DIR)/utilities.c
