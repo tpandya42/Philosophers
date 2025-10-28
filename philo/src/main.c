@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dining_philosophers.h"
+#include "philo.h"
 
 static int	handle_single_philosopher(t_simulation *sim)
 {

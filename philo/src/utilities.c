@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dining_philosophers.h"
+#include "philo.h"
 
 long	get_current_time_ms(void)
 {
@@ -50,12 +50,11 @@ unsigned int	sleep_sleep(t_simulation *sim, long long sleep_time)
 {
 	long long	wakey_wakey;
 
-
 	wakey_wakey = get_current_time_ms() + sleep_time;
 	while (get_current_time_ms() < wakey_wakey)
 	{
 		if (sim->simulation_over == true)
-			break;
+			break ;
 		usleep(100);
 	}
 	return (0);

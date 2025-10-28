@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dining_philosophers.h"
+#include "philo.h"
 
 static void	destroy_philos(t_simulation *sim)
 {

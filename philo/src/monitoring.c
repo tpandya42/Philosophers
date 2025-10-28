@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dining_philosophers.h"
+#include "philo.h"
 
 static bool	check_philosopher_death(t_simulation *sim, int i)
 {

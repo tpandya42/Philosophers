@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialization.c                                   :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tpandya <tpandya@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/06 14:48:33 by tpandya           #+#    #+#             */
-/*   Updated: 2025/10/06 14:48:35 by tpandya          ###   ########.fr       */
+/*   Created: 2025/10/28 19:18:26 by tpandya           #+#    #+#             */
+/*   Updated: 2025/10/28 19:18:27 by tpandya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dining_philosophers.h"
+#include "philo.h"
 
 static int	allocate_resources(t_simulation *sim)
 {

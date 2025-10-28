@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   synchronization.c                                  :+:      :+:    :+:   */
+/*   sync.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tpandya <tpandya@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/06 14:49:10 by tpandya           #+#    #+#             */
-/*   Updated: 2025/10/06 14:49:12 by tpandya          ###   ########.fr       */
+/*   Created: 2025/10/28 19:18:54 by tpandya           #+#    #+#             */
+/*   Updated: 2025/10/28 19:18:56 by tpandya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dining_philosophers.h"
+#include "philo.h"
 
 long	eat_time(t_thinker *philosopher)
 {

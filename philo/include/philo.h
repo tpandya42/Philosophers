@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dining_philosophers.h                              :+:      :+:    :+:   */
+/*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tpandya <tpandya@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/06 15:32:58 by tpandya           #+#    #+#             */
-/*   Updated: 2025/10/06 15:32:59 by tpandya          ###   ########.fr       */
+/*   Created: 2025/10/28 19:17:39 by tpandya           #+#    #+#             */
+/*   Updated: 2025/10/28 19:17:41 by tpandya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DINING_PHILOSOPHERS_H
-# define DINING_PHILOSOPHERS_H
+#ifndef PHILO_H
+# define PHILO_H
 
 # include <limits.h>
 # include <pthread.h>
@@ -99,8 +99,9 @@ void						increment_bites(t_thinker *philosopher);
 // Utility functions
 long						get_current_time_ms(void);
 void						logging(t_thinker *philosopher, t_action action);
-int						parse(const char *str);
+int							parse(const char *str);
 
-unsigned int				sleep_sleep(t_simulation *sim, long long sleep_time);
+unsigned int				sleep_sleep(t_simulation *sim,
+								long long sleep_time);
 
 #endif

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dining_philosophers.h"
+#include "philo.h"
 
 static bool	take_sticks_odd(t_thinker *philosopher, int left, int right)
 {

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosopher_actions.c                              :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tpandya <tpandya@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/06 14:48:57 by tpandya           #+#    #+#             */
-/*   Updated: 2025/10/06 14:48:58 by tpandya          ###   ########.fr       */
+/*   Created: 2025/10/28 19:18:37 by tpandya           #+#    #+#             */
+/*   Updated: 2025/10/28 19:18:40 by tpandya          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dining_philosophers.h"
+#include "philo.h"
 
 void	drop(t_thinker *philosopher)
 {

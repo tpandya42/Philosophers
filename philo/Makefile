@@ -5,13 +5,13 @@ CFLAGS = -Wall -Werror -Wextra -pthread -g
 SRC_DIR = src
 SRC = \
 	$(SRC_DIR)/cleanup.c \
-	$(SRC_DIR)/initialization.c \
+	$(SRC_DIR)/init.c \
 	$(SRC_DIR)/main.c \
 	$(SRC_DIR)/monitoring.c \
 	$(SRC_DIR)/monitoring_utils.c \
-	$(SRC_DIR)/philosopher_actions.c \
-	$(SRC_DIR)/simulation_runner.c \
-	$(SRC_DIR)/synchronization.c \
+	$(SRC_DIR)/routine.c \
+	$(SRC_DIR)/run_sim.c \
+	$(SRC_DIR)/sync.c \
 	$(SRC_DIR)/utilities.c \
 	$(SRC_DIR)/util_01.c
 OBJ_DIR = obj
