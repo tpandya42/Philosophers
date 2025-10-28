@@ -12,7 +12,8 @@ SRC = \
 	$(SRC_DIR)/philosopher_actions.c \
 	$(SRC_DIR)/simulation_runner.c \
 	$(SRC_DIR)/synchronization.c \
-	$(SRC_DIR)/utilities.c
+	$(SRC_DIR)/utilities.c \
+	$(SRC_DIR)/util_01.c
 OBJ_DIR = obj
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 INC_DIR = include

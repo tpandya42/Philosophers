@@ -99,7 +99,8 @@ void						increment_bites(t_thinker *philosopher);
 // Utility functions
 long						get_current_time_ms(void);
 void						logging(t_thinker *philosopher, t_action action);
-int							parse(const char *str);
-unsigned int				sleep(unsigned int duration_ms);
+int						parse(const char *str);
+
+unsigned int				sleep_sleep(t_simulation *sim, long long sleep_time);
 
 #endif

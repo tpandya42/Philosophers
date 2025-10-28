@@ -44,7 +44,7 @@ void	eatting(t_thinker *philosopher)
 	}
 	update_time(philosopher);
 	logging(philosopher, EAT);
-	sleep(philosopher->sim->time_to_eat);
+	sleep_sleep(philosopher->sim, philosopher->sim->time_to_eat);
 	increment_bites(philosopher);
 	drop(philosopher);
 }
@@ -54,7 +54,7 @@ void	take_rest(t_thinker *philosopher)
 	if (check_simulation_end(philosopher->sim))
 		return ;
 	logging(philosopher, SLEEP);
-	sleep(philosopher->sim->time_to_sleep);
+	sleep_sleep(philosopher->sim, philosopher->sim->time_to_sleep);
 }
 
 void	thinking(t_thinker *philosopher)
