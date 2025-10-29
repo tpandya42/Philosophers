@@ -81,7 +81,7 @@ void						*routine(void *philosopher);
 bool						take_sticks(t_thinker *philosopher);
 void						drop(t_thinker *philosopher);
 void						eatting(t_thinker *philosopher);
-void						take_rest(t_thinker *philosopher);
+void						chill_out(t_thinker *philosopher);
 void						thinking(t_thinker *philosopher);
 
 // Monitoring functions
