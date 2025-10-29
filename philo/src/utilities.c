@@ -53,7 +53,7 @@ unsigned int	sleep_sleep(t_simulation *sim, long long sleep_time)
 	wakey_wakey = get_current_time_ms() + sleep_time;
 	while (get_current_time_ms() < wakey_wakey)
 	{
-		if (sim->simulation_over == true)
+		if (check_simulation_end(sim))
 			break ;
 		usleep(100);
 	}
