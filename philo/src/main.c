@@ -28,10 +28,10 @@ static int	validate_and_parse_args(int argc, char **argv, t_simulation *sim)
 		printf("Insert Correct Input\n");
 		return (1);
 	}
-	sim->no_philo = parse(argv[1]);
-	sim->death_timer = parse(argv[2]);
-	sim->time_to_eat = parse(argv[3]);
-	sim->time_to_sleep = parse(argv[4]);
+	sim->no_philo = ph_atoi(argv[1]);
+	sim->death_timer = ph_atoi(argv[2]);
+	sim->time_to_eat = ph_atoi(argv[3]);
+	sim->time_to_sleep = ph_atoi(argv[4]);
 	if (sim->no_philo <= 0 || sim->death_timer <= 0 || sim->time_to_eat <= 0
 		|| sim->time_to_sleep <= 0)
 		return (printf("Pos Input Only\n"), 1);
@@ -39,7 +39,7 @@ static int	validate_and_parse_args(int argc, char **argv, t_simulation *sim)
 		return (printf("Too many Philos\n"), 1);
 	if (argc == 6)
 	{
-		sim->max_eat_count = parse(argv[5]);
+		sim->max_eat_count = ph_atoi(argv[5]);
 		if (sim->max_eat_count <= 0)
 			return (printf("Required meals must be pos\n"), 1);
 	}
