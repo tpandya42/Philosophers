@@ -94,7 +94,7 @@ void						end_simulation(t_simulation *sim);
 long						eat_time(t_thinker *philosopher);
 void						update_time(t_thinker *philosopher);
 int							get_eat_count(t_thinker *philosopher);
-void						increment_bites(t_thinker *philosopher);
+void						increment_times_eaten(t_thinker *philosopher);
 
 // Utility functions
 long						get_current_time_ms(void);

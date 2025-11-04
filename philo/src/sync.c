@@ -39,7 +39,7 @@ int	get_eat_count(t_thinker *philosopher)
 	return (count);
 }
 
-void	increment_bites(t_thinker *philosopher)
+void	increment_times_eaten(t_thinker *philosopher)
 {
 	pthread_mutex_lock(&philosopher->eat_count_mutex);
 	philosopher->times_eaten++;
