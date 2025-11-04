@@ -40,7 +40,7 @@ static int	parse_number(const char *str, int i, long *result)
 	return (i);
 }
 
-int	parse(const char *str)
+int	ph_atoi(const char *str)
 {
 	long	result;
 	int		i;
