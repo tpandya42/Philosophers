@@ -14,20 +14,20 @@
 
 void	drop(t_thinker *philosopher)
 {
-	int	left_utensil;
-	int	right_utensil;
+	int	left_stick;
+	int	right_stick;
 
-	left_utensil = philosopher->philo_id - 1;
-	right_utensil = philosopher->philo_id % philosopher->sim->no_philo;
+	left_stick = philosopher->philo_id - 1;
+	right_stick = philosopher->philo_id % philosopher->sim->no_philo;
 	if (philosopher->philo_id % 2 == 1)
 	{
-		pthread_mutex_unlock(&philosopher->sim->sticks[right_utensil]);
-		pthread_mutex_unlock(&philosopher->sim->sticks[left_utensil]);
+		pthread_mutex_unlock(&philosopher->sim->sticks[right_stick]);
+		pthread_mutex_unlock(&philosopher->sim->sticks[left_stick]);
 	}
 	else
 	{
-		pthread_mutex_unlock(&philosopher->sim->sticks[left_utensil]);
-		pthread_mutex_unlock(&philosopher->sim->sticks[right_utensil]);
+		pthread_mutex_unlock(&philosopher->sim->sticks[left_stick]);
+		pthread_mutex_unlock(&philosopher->sim->sticks[right_stick]);
 	}
 }
 
